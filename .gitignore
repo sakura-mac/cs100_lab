@@ -1,1 +1,6 @@
+/..gitignore.un~
+/..gitignore
 /ucr-cs100
+/fork/.*.un~
+/gdb/.*.un~
+/cstring/.*.un~
