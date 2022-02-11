@@ -8,8 +8,10 @@ test_my_strlen(){
 	//test my_strlen
 	int i;
 	for(i = 0; i < 10; ++i){
-		if(my_strlen(s[i]) != strlen(s[i])){
-			printf("error: my_strlen(%s) = %lu, strlen(%s) = %lu\n", s[i], my_strlen(s[i]), s[i], strlen(s[i]));
+		size_t my_len = my_strlen(s[i]);
+		size_t len = strlen(s[i]);
+		if(my_len != len){
+			printf("error: my_strlen(%s) = %lu, strlen(%s) = %lu\n", s[i], my_len, s[i], len);
 			break;
 		}
 	}
@@ -29,13 +31,13 @@ test_my_strncpy(){
 	char *s21 = "";
 
 	//nomal copy
-	if(my_strncpy(s10, s20, 14) != strncpy(s10, s20, 14)){
-		printf("error: my_strncpy(%s, %s, %d) = %s, strncpy(%s, %s, %d) = %s\n", s10, s20, 14, my_strncpy(s10, s20, 14), s10, s20, 14, strncpy(s10, s20, 14));
+	if(strcmp(my_strncpy(s10, s20, 14), "you stupid guy") != 0){
+		printf("error: my_strncpy(s10, s20, 14) = %s\n", s10);
 		goto END;
 	}
 	//copy empty string to s11
-	if(my_strncpy(s11, s21, 3) != strncpy(s11, s21, 3)){
-		printf("error: my_strncpy(%s, %s, %d) = %s, strncpy(%s, %s, %d) = %s\n", s11, s21, 3, my_strncpy(s11, s20, 3), s11, s21, 3, strncpy(s11, s21, 3));
+	if(strcmp(my_strncpy(s11, s21, 0), "") != 0){
+		printf("error: my_strncpy(s11, s21, 3) = %s\n", s11);
 		goto END;
 	}
 
@@ -49,19 +51,19 @@ test_my_strncpy(){
 int
 test_my_strcpy(){
 	//test my_strcpy
-	char s10[40] = "abc ";
+	char s10[70] = "abc ";
 	char s11[10] = "";
 	char *s20 = "you stupid guy, check out the function carefully!";
 	char *s21 = "";
 
 	//nomal copy
-	if(my_strcpy(s10, s20) != strcpy(s10, s20)){
-		printf("error: my_strcpy(%s, %s) = %s, strcpy(%s, %s) = %s\n", s10, s20, my_strcpy(s10, s20), s10, s20, strcpy(s10, s20));
+	if(strcmp(my_strcpy(s10, s20), "you stupid guy, check out the function carefully!") != 0){
+		printf("error: my_strcpy(s10, s20) = %s\n", s10);
 		goto END;
 	}
 	//copy empty string to s11
-	if(my_strcpy(s11, s21) != strcpy(s11, s21)){
-		printf("error: my_strcpy(%s, %s) = %s, strcpy(%s, %s) = %s\n", s11, s21, my_strcpy(s11, s21), s11, s21, strcpy(s11, s21));
+	if(my_strcpy(s11, s21) != ""){
+		printf("error: my_strcpy(s11, s21) = %s\n", s11);
 		goto END;
 	}
 
@@ -96,15 +98,14 @@ test_my_strchr(){
 	char *s[10] = {"", "a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg", "abcdefgh", "abcdefghi"};
 	int i;
 	for(i = 1; i < 10; ++i){
-		if(my_strchr(s[i], 'a'+i-1) != strchr(s[i], 'a'+i-1)){
-			printf("error: my_strchr(%s, %c) = %s, strchr(%s, %c) = %s\n", s[i], 'a'+i-1, my_strchr(s[i], 'a'+i-1), s[i], 'a'+i-1, strchr(s[i], 'a'+i-1));
+		char *ret_my_strchr = my_strchr(s[i], 'a'+i-1);
+		char *ret_strchr = strchr(s[i], 'a'+i-1);
+		if(ret_my_strchr != ret_strchr){
+			printf("error: my_strchr(%s, %c) = %p, strchr(%s, %c) = %p\n", s[i], 'a'+i-1, ret_my_strchr, s[i], 'a'+i-1, ret_strchr);
 			break;
 		}
 	}
-	if(my_strchr(s[0], 'a') != strchr(s[0], 'a')){
-		printf("error: my_strchr(%s, %c) = %s, strchr(%s, %c) = %s\n", s[0], 'a', my_strchr(s[0], 'a'), s[0], 'a', strchr(s[0], 'a'));
-		return 0;
-	}
+	
 	if(i == 10){
 		printf("my_strchr: sucess\n");
 		return 1;
@@ -121,13 +122,13 @@ test_my_strncat(){
 	char *s21 = "";
 
 	//nomal cat
-	if(my_strncat(s10, s20, 14) != strncat(s10, s20, 14)){
-		printf("error: my_strncat(%s, %s, %d) = %s, strncat(%s, %s, %d) = %s\n", s10, s20, 14, my_strncat(s10, s20, 14), s10, s20, 14, strncat(s10, s20, 14));
+	if(strcmp(my_strncat(s10, s20, 14), "abc you stupid guy") != 0){
+		printf("error: my_strncat(s10, s20, 14) = %s\n", s10);
 		goto END;
 	}
 	//cat empty string to s11
-	if(my_strncat(s11, s21, 3) != strncat(s11, s21, 3)){
-		printf("error: my_strncat(%s, %s, %d) = %s, strncat(%s, %s, %d) = %s\n", s11, s21, 3, my_strncat(s11, s20, 3), s11, s21, 3, strncat(s11, s21, 3));
+	if(strcmp(my_strncat(s11, s21, 0), "") != 0){
+		printf("error: my_strncat(s11, s21, 3) = %s\n", s11);
 		goto END;
 	}
 
@@ -146,13 +147,13 @@ test_my_strcat(){
 	char *s21 = "";
 
 	//nomal cat
-	if(my_strcat(s10, s20) != strcat(s10, s20)){
-		printf("error: my_strcat(%s, %s) = %s, strcat(%s, %s) = %s\n", s10, s20, my_strcat(s10, s20), s10, s20, strcat(s10, s20));
+	if(strcmp(my_strcat(s10, s20), "abc you stupid guy, check out the function carefully!") != 0){
+		printf("error: my_strcat(s10, s20) = %s\n", s10);
 		goto END;
 	}
 	//cat empty string to s11
-	if(my_strcat(s11, s21) != strcat(s11, s21)){
-		printf("error: my_strcat(%s, %s) = %s, strcat(%s, %s) = %s\n", s11, s21, my_strcat(s11, s20), s11, s21, strcat(s11, s21));
+	if(strcmp(my_strcat(s11, s21), "") != 0){
+		printf("error: my_strcat(s11, s21) = %s\n", s11);
 		goto END;
 	}
 
@@ -169,8 +170,10 @@ test_my_strstr(){
 	char *t[10] = {"", "a", "b", "c", "cd", "cde", "ef", "defg", "efgh", "hi"};
 	int i, j;
 	for(i = 0; i < 10; ++i){
-		if(my_strstr(s[i], t[i]) != strstr(s[i], t[i])){
-			printf("error: my_strstr(%s, %s) = %s, strstr(%s, %s) = %s\n", s[i], t[j], my_strstr(s[i], t[i]), s[i], t[i], strstr(s[i], t[i]));
+		char *ret_my_strstr = my_strstr(s[i], t[i]);;
+		char *ret_strstr = strstr(s[i], t[i]);
+		if(ret_my_strstr != ret_strstr){
+			printf("error: my_strstr(%s, %s) = %s, strstr(%s, %s) = %s\n", s[i], t[i], ret_my_strstr, s[i], t[i], ret_strstr);
 			break;
 		}
 	}
