@@ -62,7 +62,7 @@ test_my_strcpy(){
 		goto END;
 	}
 	//copy empty string to s11
-	if(my_strcpy(s11, s21) != ""){
+	if(strcmp(my_strcpy(s11, s21), "") != 0){
 		printf("error: my_strcpy(s11, s21) = %s\n", s11);
 		goto END;
 	}
@@ -141,7 +141,7 @@ test_my_strncat(){
 int
 test_my_strcat(){
 	//test my_strcat
-	char s10[40] = "abc ";
+	char s10[70] = "abc ";
 	char s11[10] = "";
 	char *s20 = "you stupid guy, check out the function carefully!";
 	char *s21 = "";
@@ -172,7 +172,7 @@ test_my_strstr(){
 	for(i = 0; i < 10; ++i){
 		char *ret_my_strstr = my_strstr(s[i], t[i]);;
 		char *ret_strstr = strstr(s[i], t[i]);
-		if(ret_my_strstr != ret_strstr){
+		if(*ret_my_strstr != *ret_strstr){
 			printf("error: my_strstr(%s, %s) = %s, strstr(%s, %s) = %s\n", s[i], t[i], ret_my_strstr, s[i], t[i], ret_strstr);
 			break;
 		}
